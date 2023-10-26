@@ -13,6 +13,7 @@
                 <el-button style="width: 100px; height: 45px;">开始笔试</el-button>   
             </div>
         </div>
+
         <div class="part2">
             <inputanswer />
         </div>   
@@ -25,15 +26,18 @@ import inputanswer from '../components/inputanswer.vue'
 </script>
 
 <style scoped>
+
 .hezi1 {
-    float: left;
-    margin-left: 130px;
+    display: inline;
+    margin-left: 10px;
 }
 
 .hezi2 {
-    float: left;
+    display: inline;
     margin-left: 100px;
 }
-
+.part2{
+    margin-top: 200px;
+}
 
 </style>

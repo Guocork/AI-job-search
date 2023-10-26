@@ -83,7 +83,7 @@ body {
 .bottom_div{
     position: absolute; 
     bottom: 0; 
-    background-color: #af2424;
+    background-color: #ffffff;
     width: 100%;
     z-index: -1; 
     height: 50px;
