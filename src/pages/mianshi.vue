@@ -10,18 +10,26 @@
                :prefix-icon="Search" />
             </div>
             <div class="hezi2">
-                <el-button style="width: 100px; height: 45px;">开始面试</el-button>   
+                <el-button @click="mianshi1" style="width: 100px; height: 45px;">开始面试</el-button>   
             </div>
         </div>
 
         <div class="part2">
-            <inputanswer />
+            <inputanswer :info="input1" ref="childComp"/>
         </div>   
     </div>
 </template>
 
 <script setup>
+import {reactive,ref} from 'vue';
 import inputanswer from '../components/inputanswer.vue'
+const input1=ref('')
+
+const childComp = ref(null);
+
+const mianshi1= () =>{
+    childComp.value.play();
+}
 </script>
 
 <style scoped>
