@@ -3,7 +3,7 @@
         <el-divider border-style="double" />
         <el-button link @click="TiaoZhuan1">
            <el-icon :size="18"><ChatLineSquare /></el-icon>
-           <span id="button1">优化简历</span>
+           <span id="button1">生成简历</span>
         </el-button>
         <el-divider border-style="double" />
         <el-button link @click="TiaoZhuan2">

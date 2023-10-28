@@ -43,6 +43,6 @@ const mianshi1= () =>{
     margin-left: 100px;
 }
 .part2{
-    margin-top: 200px;
+    margin-top: 100px;
 }
 </style>

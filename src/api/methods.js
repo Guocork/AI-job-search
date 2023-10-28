@@ -29,3 +29,11 @@ export function sendMessage(params){
           }
       })
 }
+
+export function getMessage(){
+    return request({
+        url:'',
+        method:'get',
+        mock: false,
+    })
+}

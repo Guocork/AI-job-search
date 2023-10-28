@@ -3,7 +3,7 @@
     <el-container>
       <el-aside width="250px">
         <div class="team_container">
-          <p class="team_name">简优创意</p>
+          <p @click="backHome" class="team_name">简优创意</p>
         </div>
         <div>
           AI求职面试助手
@@ -17,7 +17,7 @@
         <div>
           <router-view />
         </div>
-        <div class="bottom_div">我是bottom</div>
+        <div class="bottom_div"></div>
         </div>
       </el-main>
     </el-container>
@@ -30,7 +30,14 @@ import { ref } from 'vue'
 import { Search } from '@element-plus/icons-vue'
 import divider from './components/divider.vue'
 import Button from './components/button.vue';
+import { useRouter } from 'vue-router'
 const input1 = ref('')
+
+const router = useRouter()
+
+const backHome=()=>{
+  router.push('/')
+}
 </script>
 
 <style>

@@ -5,6 +5,10 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 
 const routes = [
     { 
+        path: '/', 
+        component: () => import('../pages/home.vue')
+    },
+    { 
         path: '/bishi', 
         component: () => import('../pages/bishi.vue')
     },
@@ -19,6 +23,10 @@ const routes = [
     { 
         path: '/fenxi', 
         component: () => import('../pages/fenxi.vue')
+    },
+    { 
+        path: '/jiexi', 
+        component: () => import('../pages/jiexi.vue')
     },
   ]
   
