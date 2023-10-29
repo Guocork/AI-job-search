@@ -1,13 +1,16 @@
 export default{
     namespaced:true,
     state: {
-        questions:[5]
+        data:[]
       },
       getters: {
       },
       mutations: {
-        addQuestion(state,qes){
-            state.questions[0]=qes
+        addData(state,list){
+          console.log( state.data);
+            state.data=list
+            console.log( state.data);
+            
         }
       },
       actions: {

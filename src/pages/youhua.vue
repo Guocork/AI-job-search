@@ -11,6 +11,7 @@
         <div class="hezi2">
             <el-button style="width: 100px; height: 45px;">生成简历</el-button>
         </div>
+        <el-empty description="description" />
     </div>
 </template>
 
