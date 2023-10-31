@@ -1,48 +1,44 @@
 <template>
     <div class="container">
-        <div class="part1">
-            <div class="hezi1">
-                <el-input 
-                v-model="input1" 
-                placeholder="求职方向（如：程序员/产品经理/运营等）" 
-                style="height: 45px;width: 950px;" 
-                clearable
-               :prefix-icon="Search" />
-            </div>
-            <div class="hezi2">
-                <el-button @click="mianshi1" style="width: 100px; height: 45px;">开始面试</el-button>   
-            </div>
-        </div>
-
+        <el-row>
+            <el-col :span="16">
+                <div class="grid-content ep-bg-purple">
+                    <div class="hezi1">
+                        <el-input v-model="input1" placeholder="求职方向（如：程序员/产品经理/运营等）" style="height: 45px" clearable
+                            :prefix-icon="Search" />
+                    </div>
+                </div>
+            </el-col>
+            <el-col :span="8">
+                <div class="grid-content ep-bg-purple-light">
+                    <el-button @click="mianshi1" style="width: 100px; height: 45px;">开始面试</el-button>
+                </div>
+            </el-col>
+        </el-row>
         <div class="part2">
-            <inputanswer :info="input1" ref="childComp"/>
-        </div>   
+            <inputanswer
+                :info="'我在准备参加' + input1 + '的面试，现在请你给我出5道题，来模拟我的面试内容，请按照：题目：{}的内容输出，注意不要输出任何多余的内容，你也不需要输出任何回复我提问的内容，例如：理解你的要求，以下是五道题目；祝你好运等等与题目无关的内容'"
+                ref="childComp" />
+        </div>
     </div>
 </template>
 
 <script setup>
-import {reactive,ref} from 'vue';
+import { reactive, ref } from 'vue';
 import inputanswer from '../components/inputanswer.vue'
-const input1=ref('')
+import { ElMessageBox } from 'element-plus'
+const input1 = ref('')
 
 const childComp = ref(null);
 
-const mianshi1= () =>{
-    childComp.value.play();
+const mianshi1 = () => {
+    ElMessageBox.alert('此功能尚未上线', '提示', {
+        confirmButtonText: '确定'
+    })
+    // childComp.value.play();
 }
 </script>
 
 <style scoped>
-.hezi1 {
-    display: inline;
-    margin-left: 10px;
-}
 
-.hezi2 {
-    display: inline;
-    margin-left: 100px;
-}
-.part2{
-    margin-top: 100px;
-}
 </style>

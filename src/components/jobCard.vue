@@ -1,14 +1,10 @@
 <template>
-  <div>
-    🚀👨‍🎓🏢
-  </div>
   <div class="job-list">
-    <div v-for="(job, index) in jobList" 
-    :key="index" 
-    class="job-item" 
-    @mouseenter="showTooltip = true"
-    @mouseleave="showTooltip = false" 
-    @click="navigateToJobPage(job.url)">
+    <div v-for="(job, index) in jobList" :key="index" 
+         class="job-item" 
+         @mouseenter="showTooltip = true"
+         @mouseleave="showTooltip = false" 
+         @click="navigateToJobPage(job.url)">
 
       <div class="job-title">🚀{{ job.title }}</div>
       <div class="job-description">👨‍🎓{{ job.description }}</div>
@@ -25,7 +21,13 @@
 import { ref, onMounted, reactive } from 'vue';
 import { getMessage } from '@/api/methods'
 
-const jobList = ref([]);
+const jobList = ref([
+  {
+    title:'java工程师',
+    description:'你要会Java',
+    location:'上海'
+  }
+]);
 const showTooltip = ref(false);
 
 const fetchJobList = () => {
@@ -37,11 +39,11 @@ onMounted(() => {
   fetchJobList();
 });
 
-  
+
 
 const navigateToJobPage = (url) => {
   // 跳转到指定网页
-  window.open(url, '_blank');
+  window.open('https://colingo.ai/', '_blank');
 };
 </script>
 
@@ -58,7 +60,7 @@ const navigateToJobPage = (url) => {
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.2s;
-  width: 300px;
+  width: 200px;
   margin: 10px;
   position: relative;
 }
@@ -101,7 +103,10 @@ const navigateToJobPage = (url) => {
 }
 
 .fade-enter,
-.fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+.fade-leave-to
+
+/* .fade-leave-active in <2.1.8 */
+  {
   opacity: 0;
   transform: translateY(-10px);
 }

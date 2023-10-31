@@ -7,10 +7,10 @@ import { ElMessage } from 'element-plus';
 // 创建axios实例对象
 const service = axios.create({
     timeout:100000,
-    baseURL:'/apis',
+    baseURL:'http://124.222.10.135:9007',
     headers:{
         "Content-type":"application/json;charset=utf-8",
-        "Authorization":"Bearer sk-a220ca3ea10d27ca0174c51e06a6dd00"
+        // "Authorization":"Bearer sk-a220ca3ea10d27ca0174c51e06a6dd00"
     }
 });
 

@@ -3,7 +3,7 @@
         <el-divider border-style="double" />
         <el-button link @click="TiaoZhuan1">
            <el-icon :size="18"><ChatLineSquare /></el-icon>
-           <span id="button1">生成简历</span>
+           <span id="button1">优化简历</span>
         </el-button>
         <el-divider border-style="double" />
         <el-button link @click="TiaoZhuan2">
@@ -20,11 +20,16 @@
         <el-icon :size="18"><Compass /></el-icon>
         <span id="button1">智能分析</span>
         </el-button>
+        <el-divider border-style="double" />
+        <el-button link @click="TiaoZhuan4">
+           <el-icon :size="18"><Orange /></el-icon>
+           <span id="button1">求职社区</span>
+        </el-button>
     </div>
 </template>
 
 <script setup>
-import { ElMessageBox } from 'element-plus'
+import { ElMessageBox,ElNotification  } from 'element-plus'
 import { useRouter } from 'vue-router'
   function OpenAlert(){
   ElMessageBox.alert('此功能尚未上线', '提示', {
@@ -33,6 +38,11 @@ import { useRouter } from 'vue-router'
 }
 const router = useRouter()
 const TiaoZhuan1=()=>{
+  ElNotification({
+    title: '提示',
+    message: '该功能未上线,程序小哥正在拼命加班',
+    type: 'warning',
+  })
   router.push('/youhua')
 }
 
@@ -42,6 +52,12 @@ const TiaoZhuan2=()=>{
 
 const TiaoZhuan3=()=>{
   router.push('/bishi')
+}
+
+const TiaoZhuan4=()=>{
+  ElMessageBox.alert('此功能尚未上线', '提示', {
+    confirmButtonText: '确定'
+  })
 }
 
 </script>
