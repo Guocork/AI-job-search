@@ -12,7 +12,7 @@ export function sendMessage(params) {
                 "OUTPUT_STREAM": {
                     "provider_id": "openai",
                     "model_id": "gpt-3.5-turbo",
-                    "use_cache": false
+                    "use_cache": true
                 }
             },
             "blocking": true,
