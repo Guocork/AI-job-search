@@ -26,6 +26,12 @@
       </div>
     </el-col>
   </el-row>
+  <!-- <div class="card" style="text-align: -webkit-center"> -->
+  <el-card class="box-card" style="width:480px;margin:auto;">
+    <div v-for="o in 4" :key="o" class="text item">{{ 'List item ' + o }}</div>
+  </el-card>
+  <!-- </div> -->
+
   <!-- <el-empty description="description" /> -->
 </template>
 
@@ -33,6 +39,7 @@
 import { ref } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { UploadProps, UploadUserFile } from 'element-plus'
+
 
 const fileList = ref([
   // {
@@ -78,5 +85,17 @@ const beforeRemove = (uploadFile, uploadFiles) => {
 <style scoped>
 .hezi1 {
   margin-bottom: 20px;
+}
+
+.text {
+  font-size: 14px;
+}
+
+.item {
+  padding: 18px 0;
+}
+
+.box-card {
+  width: 480px;
 }
 </style>
