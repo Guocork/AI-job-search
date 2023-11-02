@@ -2,17 +2,12 @@
     <div class="container">
         <el-row :gutter="20">
             <el-col :span="16">
-                <div class="hezi1">
                     <el-input v-model="input1" placeholder="求职方向（如：程序员/产品经理/运营等）" type="input" clearable
                         :prefix-icon="Search" size="large" autofocus="true" show-word-limit="true" :rows="2"
                         @change="bishi1()" />
-                </div>
             </el-col>
             <el-col :span="8">
                 <el-button @click="bishi1" style="width: 100px; height: 45px;">开始笔试</el-button>
-                <!-- <div class="hezi2">
-                    <el-button @click="bishi1" style="width: 100px; height: 45px;">开始笔试</el-button>
-                </div> -->
             </el-col>
         </el-row>
         <div class="part2">

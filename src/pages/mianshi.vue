@@ -1,18 +1,15 @@
 <template>
     <div class="container">
-        <el-row>
+        <el-row :gutter="20">
             <el-col :span="16">
                 <div class="grid-content ep-bg-purple">
-                    <div class="hezi1">
-                        <el-input v-model="input1" placeholder="求职方向（如：程序员/产品经理/运营等）" style="height: 45px" clearable
-                            :prefix-icon="Search" />
-                    </div>
+                    <el-input v-model="input1" placeholder="求职方向（如：程序员/产品经理/运营等）" type="input" clearable
+                        :prefix-icon="Search" size="large" autofocus="true" show-word-limit="true" :rows="2"
+                        @change="" />
                 </div>
             </el-col>
             <el-col :span="8">
-                <div class="grid-content ep-bg-purple-light">
                     <el-button @click="mianshi1" style="width: 100px; height: 45px;">开始面试</el-button>
-                </div>
             </el-col>
         </el-row>
         <div class="part2">
