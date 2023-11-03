@@ -38,11 +38,11 @@ import { useRouter } from 'vue-router'
 }
 const router = useRouter()
 const TiaoZhuan1=()=>{
-  ElNotification({
-    title: '提示',
-    message: '该功能未上线,程序小哥正在拼命加班',
-    type: 'warning',
-  })
+  // ElNotification({
+  //   title: '提示',
+  //   message: '该功能未上线,程序小哥正在拼命加班',
+  //   type: 'warning',
+  // })
   router.push('/youhua')
 }
 

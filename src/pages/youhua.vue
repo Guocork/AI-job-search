@@ -21,11 +21,11 @@
           :on-remove="handleRemove" :before-remove="beforeRemove" :limit="1" :on-exceed="handleExceed"
           :on-success="handlesuccess">
           <el-button style="height: 45px;">上传简历</el-button>
-          <template #tip>
-            <!-- <div class="el-upload__tip">
+          <!-- <template #tip>
+            <div class="el-upload__tip">
                 文件大小不要超过500KB.
-            </div> -->
-          </template>
+            </div>
+          </template> -->
         </el-upload>
       </div>
     </el-col>
@@ -35,14 +35,15 @@
       </div>
     </el-col>
   </el-row>
-  <!-- <div class="card" style="text-align: -webkit-center"> -->
   <el-card class="box-card" style="width:480px;margin:auto;">
-    <!-- <div v-for="o in 4" :key="o" class="text item">{{ 'List item ' + o }}</div> -->
     {{ userReseme }}
   </el-card>
-  <!-- </div> -->
-
-  <!-- <el-empty description="description" /> -->
+  <!-- <div class="common-layout">
+    <el-container>
+      <el-aside width="200px" background="black">Aside</el-aside>
+      <el-main>Main</el-main>
+    </el-container>
+  </div> -->
 </template>
 
 <script setup>

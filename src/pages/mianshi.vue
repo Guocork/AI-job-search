@@ -1,15 +1,26 @@
 <template>
     <div class="container">
         <el-row :gutter="20">
-            <el-col :span="16">
+            <el-col :span="12">
                 <div class="grid-content ep-bg-purple">
-                    <el-input v-model="input1" placeholder="求职方向（如：程序员/产品经理/运营等）" type="input" clearable
-                        :prefix-icon="Search" size="large" autofocus="true" show-word-limit="true" :rows="2"
-                        @change="" />
+                    <el-input v-model="input1" placeholder="自我介绍/个人经历" type="input" clearable :prefix-icon="Search"
+                        size="large" autofocus="true" show-word-limit="true" :rows="2" @change="" />
                 </div>
             </el-col>
-            <el-col :span="8">
-                    <el-button @click="mianshi1" style="width: 100px; height: 45px;">开始面试</el-button>
+            <el-col :span="6">
+                <div class="grid-content ep-bg-purple-light">
+                    <el-upload v-model:file-list="fileList" class="upload-demo"
+                        action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15" multiple
+                        :on-preview="handlePreview" :on-remove="handleRemove" :before-remove="beforeRemove" :limit="1"
+                        :on-exceed="handleExceed" :on-success="handlesuccess">
+                        <el-button style="height: 45px;">上传简历</el-button> 
+
+                        
+                    </el-upload>
+                </div>
+            </el-col>
+            <el-col :span="6">
+                <el-button @click="mianshi1" style="width: 100px; height: 45px;">开始面试</el-button>
             </el-col>
         </el-row>
         <div class="part2">
@@ -36,6 +47,4 @@ const mianshi1 = () => {
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
