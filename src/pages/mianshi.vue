@@ -25,17 +25,17 @@
         </el-row>
         <!-- 输入部分 -->
         <el-card class="box-card">
-            <el-countdown v-show="xianshi" title="剩余时间" :value="value" />
-            <div style="margin: 10px;">{{question}}</div>
+            <el-countdown v-show="showTime" title="剩余时间" :value="restTime" />
+            <div style="margin: 10px;">{{ question }}</div>
             <el-form ref="formRef" :model="numberValidateForm" label-width="100px" class="demo-ruleForm">
                 <el-form-item label="回答" prop="age">
-                    <el-input v-model.number="numberValidateForm.age" type="text" autocomplete="off" />
+                    <el-input v-model="userAnswer" type="text" autocomplete="off" />
                 </el-form-item>
                 <el-form-item>
-                    <el-button @click="resetForm(formRef)">上一题</el-button>
-                    <el-button @click="resetForm(formRef)">下一题</el-button>
+                    <el-button>上一题</el-button>
+                    <el-button>下一题</el-button>
                     <el-button @click="resetForm(formRef)">重置</el-button>
-                    <el-button type="primary" @click="submitForm(formRef)">提交</el-button>
+                    <el-button type="primary" @click="submitForm()">提交</el-button>
                 </el-form-item>
             </el-form>
         </el-card>
@@ -48,51 +48,85 @@
 </template>
 
 <script setup>
-import { reactive, ref, h } from 'vue';
+import { reactive, ref, h, watch } from 'vue';
 import inputanswer from '../components/inputanswer.vue'
 import { ElMessageBox, ElLoading } from 'element-plus'
 import { FormInstance } from 'element-plus'
+import { sendMessage } from '@/api/colingo'
+
+// 自我介绍
 const input1 = ref('')
 
-const childComp = ref(null);
+// 剩余时间
+const restTime = ref(Date.now() + 1000 * 60 * 60 * 7)
 
-const value = ref(Date.now() + 1000 * 60 * 60 * 7)
+// 问题
+const question = ref('欢迎参加面试')
 
-const question=ref('欢迎参加面试')
+// 显示时间
+const showTime = ref(false)
 
-const xianshi=ref(false)
+const userAnswer = ref('')
 
 const mianshi1 = () => {
+    const prompt1 = '现在你是面试官，我在面试vue程序员的岗位，请出一道面试题。'
     const loading = ElLoading.service({
         lock: true,
         text: 'Loading',
         background: 'rgba(0, 0, 0, 0.7)',
     })
     //网络请求
-    xianshi.value=true
-    loading.close();
+    sendMessage(prompt1).then(
+        res => {
+            question.value = res.run.results[0][0].value.content
+        }
+    )
+    watch(
+        () => question.value,
+        () => {
+            showTime.value = true
+            loading.close();
+        }
+    )
     // childComp.value.play();
 }
 
 const formRef = ref()
 
-const message = ref('这里展示返回的信息阿三大苏打实打实大苏打飒飒打撒打撒阿三大苏打实打实的')
+const message = ref('')
 
 const numberValidateForm = reactive({
     age: '',
 })
 
 const submitForm = () => {
+    const prompt2 = '现在你是面试官，这里有一道面试题目以及我的回答，请你根据我的回答进行分析与评价，并且给出你的建议。\n' + question.value + userAnswer.value
     //loading
-    //接口拿数据
-    ElMessageBox({
-        title: '面试评价',
-        message: h('div', [
-            h('span', null, message.value),
-        ]),
-        confirmButtonText: '确定',
+    const loading = ElLoading.service({
+        lock: true,
+        text: 'Loading',
+        background: 'rgba(0, 0, 0, 0.7)',
     })
-    //loading结束
+    //接口拿数据
+    sendMessage(prompt2).then(
+        res => {
+            message.value = res.run.results[0][0].value.content
+        }
+    )
+    watch(
+        () => message.value,
+        () => {
+            ElMessageBox({
+                title: '面试评价',
+                message: h('div', [
+                    h('span', null, message.value),
+                ]),
+                confirmButtonText: '确定',
+            })
+            //loading结束
+            loading.close();
+        }
+    )
 }
 
 const resetForm = (formEl) => {
@@ -104,13 +138,13 @@ const resetForm = (formEl) => {
 </script>
 
 <style scoped>
-
-.box-card{
+.box-card {
     height: 400px;
-    width:480px;
-    margin:auto;
+    width: 480px;
+    margin: auto;
     text-align: center;
 }
+
 .wrap {
     border-width: 2px;
 }

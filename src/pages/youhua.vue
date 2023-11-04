@@ -1,5 +1,5 @@
 <template>
-  <el-row :gutter="10" class="hezi1">
+  <!-- <el-row :gutter="10" class="hezi1">
     <el-col :span="6">
       <div class="grid-content ep-bg-purple">
         <el-select v-model="value1" class="m-2" placeholder="求职职位" size="large">
@@ -21,11 +21,11 @@
           :on-remove="handleRemove" :before-remove="beforeRemove" :limit="1" :on-exceed="handleExceed"
           :on-success="handlesuccess">
           <el-button style="height: 45px;">上传简历</el-button>
-          <!-- <template #tip>
+          <template #tip>
             <div class="el-upload__tip">
                 文件大小不要超过500KB.
             </div>
-          </template> -->
+          </template>
         </el-upload>
       </div>
     </el-col>
@@ -34,10 +34,26 @@
         <el-button @click="youhua" style="height: 45px;">优化简历</el-button>
       </div>
     </el-col>
+  </el-row> -->
+  <el-row :gutter="20">
+    <el-col :span="12">
+      <el-card class="box-card1">
+        <el-form class="demo-ruleForm">
+          <el-form-item>
+            
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary">优化简历</el-button>
+          </el-form-item>
+        </el-form>
+      </el-card>
+    </el-col>
+    <el-col :span="12">
+      <el-card class="box-card2">
+        {{ userReseme }}
+      </el-card>
+    </el-col>
   </el-row>
-  <el-card class="box-card" style="width:480px;margin:auto;">
-    {{ userReseme }}
-  </el-card>
   <!-- <div class="common-layout">
     <el-container>
       <el-aside width="200px" background="black">Aside</el-aside>
@@ -48,22 +64,29 @@
 
 <script setup>
 import { ref } from 'vue'
-import { ElMessage, ElMessageBox,ElLoading } from 'element-plus'
+import { ElMessage, ElMessageBox, ElLoading } from 'element-plus'
 import { UploadProps, UploadUserFile } from 'element-plus'
+import { sendMessage } from '@/api/colingo'
 
 const userReseme = ref('我是接口返回的简历')
 
 const value1 = ref('')
 
-const youhua=()=>{
+const prompt = ref('你是谁')
+
+const youhua = () => {
   const loading = ElLoading.service({
-        lock: true,
-        text: 'Loading',
-        background: 'rgba(0, 0, 0, 0.7)',
-    })
-    //网络请求
-    
-    loading.close()
+    lock: true,
+    text: 'Loading',
+    background: 'rgba(0, 0, 0, 0.7)',
+  })
+  //网络请求
+  sendMessage(prompt.value).then(
+    res => {
+      userReseme.value = res.run.results[0][0].value.content
+    }
+  )
+  loading.close()
 }
 
 const options1 = [
@@ -172,5 +195,4 @@ const beforeRemove = (uploadFile, uploadFiles) => {
 .box-card {
   width: 480px;
 }
-
 </style>

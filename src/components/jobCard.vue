@@ -1,6 +1,6 @@
 <template>
   <el-row :gutter="24">
-    <el-col :span="8" v-for="(item, index) in jobList" :key="item.id">
+    <el-col :span="8" v-for="(item, index) in jobList" :key="item.id" class="box-card">
       <el-card shadow="always">
         <template #header>
           <div class="card-header">
@@ -13,7 +13,7 @@
           <el-descriptions-item label="👨‍🎓">{{ item.jobDescription }}</el-descriptions-item>
           <el-descriptions-item label="📍">{{ item.jobLocation }}</el-descriptions-item>
           <el-descriptions-item label="🏢">{{ item.jobRequirements }}</el-descriptions-item>
-          <el-descriptions-item label="🏢">{{ item.companyDescription }}</el-descriptions-item>
+          <el-descriptions-item label="🎯">{{ item.companyDescription }}</el-descriptions-item>
         </el-descriptions>
       </el-card>
     </el-col>
