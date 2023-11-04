@@ -1,23 +1,29 @@
 <template>
   <div>
     <el-row justify="center">
-      <el-col :span="23">
+      <el-col :span="18">
         <div class="grid-content ep-bg-purple-dark">
-          <el-input v-model="params.jobTitle" placeholder="工作名/要求/位置/月薪" style="height: 45px;" clearable :prefix-icon="Search"  @change="change"/>
+          <el-input v-model="params.jobTitle" placeholder="工作名/要求/位置/月薪" style="height: 45px;" clearable
+            :prefix-icon="Search" >
+            <template #append>
+              <el-button :icon="Search" @click="change"/>
+            </template>
+          </el-input>
         </div>
       </el-col>
     </el-row>
-    <el-row>
+    <el-row justify="center">
       <el-col :span="6">
         <div class="grid-content ep-bg-purple">
           <el-select v-model="params.type" class="m-2" placeholder="工作类型" size="large" filterable clearable>
-            <el-option v-for="item in options1" :key="item.value1" :label="item.label" :value="item.value1"  />
+            <el-option v-for="item in options1" :key="item.value1" :label="item.label" :value="item.value1" />
           </el-select>
         </div>
       </el-col>
       <el-col :span="2" :offset="0">
         <div class="grid-content ep-bg-purple">
-          <el-select v-model="params.jobLocation" class="m-2" placeholder="工作地点" size="large" filterable @change="change" clearable>
+          <el-select v-model="params.jobLocation" class="m-2" placeholder="工作地点" size="large" filterable @change="change"
+            clearable>
             <el-option v-for="item in options2" :key="item.value2" :label="item.label" :value="item.value2" />
           </el-select>
         </div>
@@ -31,7 +37,8 @@
       </el-col>
       <el-col :span="2" :offset="1">
         <div class="grid-content ep-bg-purple">
-          <el-select v-model="params.jobTitle" class="m-2" placeholder="工作方向" size="large" filterable @change="change" clearable>
+          <el-select v-model="params.jobTitle" class="m-2" placeholder="工作方向" size="large" filterable @change="change"
+            clearable>
             <el-option v-for="item in options4" :key="item.value4" :label="item.label" :value="item.value4" />
           </el-select>
         </div>
