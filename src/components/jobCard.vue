@@ -5,7 +5,7 @@
         <template #header>
           <div class="card-header">
             <span>{{ item.companyName }}</span>
-            <el-button @click="window.open(`${item.jobUrl}`, '_blank');" text>点击投递</el-button>
+            <el-button @click="tiaozhaun1(item.jobUrl)" text>点击投递</el-button>
           </div>
         </template>
         <el-descriptions column="1">
@@ -21,31 +21,41 @@
 </template>
 
 <script setup>
-import { ref, onMounted, reactive } from 'vue';
+import { ref, onMounted, reactive,defineProps } from 'vue';
 import { selectJobListApi } from '@/api/job'
 
 const jobList = ref([]);
 const showTooltip = ref(false);
 
 const fetchJobList = () => {
-  selectJobListApi().then(res => {
+  selectJobListApi(props.info).then(res => {
     jobList.value = res.data;
   })
 };
+
+const tiaozhaun1=(jobUrl)=>{
+  window.open(jobUrl, '_blank');
+}
 
 onMounted(() => {
   // 在组件加载时发送请求给后台，并将返回的职位信息存储在jobList中
   fetchJobList();
 });
 
+// const play1 = () => {
+//   console.log(props.info.value);
+//   selectJobListApi(props.info)
+// }
+
+const props = defineProps({
+  //子组件接收父组件传递过来的值
+  info: Object,
+})
 
 
-// const navigateToJobPage = (url) => {
-//   // 跳转到指定网页
-//   window.open('https://colingo.ai/', '_blank');
-// };
-
-
+defineExpose({
+  fetchJobList,
+});
 
 </script>
 

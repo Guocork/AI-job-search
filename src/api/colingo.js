@@ -11,7 +11,7 @@ export function sendMessage(params) {
             "config": {
                 "OUTPUT_STREAM": {
                     "provider_id": "openai",
-                    "model_id": "gpt-3.5-turbo",
+                    "model_id": "gpt-3.5-turbo-16k",
                     "use_cache": true
                 }
             },

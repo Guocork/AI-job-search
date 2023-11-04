@@ -57,4 +57,17 @@ const questionList = computed(() => store.state.question.data)
 .box-card {
     width: 100%;
 }
+
+pre {
+    white-space: pre-wrap;
+    /* css-3 */
+    word-wrap: break-word;
+    /* InternetExplorer5.5+ */
+    white-space: -moz-pre-wrap;
+    /* Mozilla,since1999 */
+    white-space: -pre-wrap;
+    /* Opera4-6 */
+    white-space: -o-pre-wrap;
+    /* Opera7 */
+}
 </style>

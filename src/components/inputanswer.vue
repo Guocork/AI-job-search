@@ -57,7 +57,7 @@ const next = () => {
     "现在有一道面试题，\n内容是：" + thisQuestion.question + "这是我的回答：" + thisQuestion.answer + "。\n请给我这道题的标准正确答案，并且分析我的答案。";
   sendMessage(message).then(
     res => {
-      let text=res.run.results[0].value.content;
+      let text=res.run.results[0][0].value.content;
       questionsList.value[thisSelectedIndex].standardAnswer = text;
     }
   )
@@ -74,7 +74,7 @@ const play = () => {
     background: 'rgba(0, 0, 0, 0.7)',
   })
   sendMessage(props.info).then(res => {
-    let text=res.run.results[0].value.content;
+    let text=res.run.results[0][0].value.content;
     let startIndex = 0;
     for (let index = 1; index < 6; index++) {
       let index = text.indexOf("：", startIndex);
@@ -106,7 +106,7 @@ const submitAnswers = () => {
     "现在有一道面试题，\n内容是：" + thisQuestion.question + "这是我的回答：" + thisQuestion.answer + "。\n请给我这道题的标准正确答案，并且分析我的答案。";
   sendMessage(message).then(
     res => {
-      questionsList.value[thisSelectedIndex].standardAnswer = res;
+      questionsList.value[thisSelectedIndex].standardAnswer = res.run.results[0][0].value.content;
       console.log(questionsList.value);
       store.commit('question/addData', questionsList.value);
       loading.close();
