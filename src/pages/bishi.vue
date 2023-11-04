@@ -20,7 +20,7 @@
 
 <script setup>
 import { reactive, ref } from 'vue';
-import inputanswer from '../components/inputanswer.vue'
+import inputanswer from '@/components/inputanswer.vue'
 const input1 = ref('')
 const childComp = ref(null);
 

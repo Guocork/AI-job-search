@@ -25,7 +25,7 @@
 
 <script setup>
 import { reactive, ref, defineProps, toRefs, computed } from 'vue';
-import { sendMessage } from '@/api/methods'
+import { sendMessage } from '@/api/colingo'
 import { ElLoading } from 'element-plus'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex';
@@ -57,7 +57,8 @@ const next = () => {
     "现在有一道面试题，\n内容是：" + thisQuestion.question + "这是我的回答：" + thisQuestion.answer + "。\n请给我这道题的标准正确答案，并且分析我的答案。";
   sendMessage(message).then(
     res => {
-      questionsList.value[thisSelectedIndex].standardAnswer = res;
+      // res.data.run.results[0][0].value.content
+      // questionsList.value[thisSelectedIndex].standardAnswer = res;
     }
   )
   data.selectedIndex = data.selectedIndex + 1;
