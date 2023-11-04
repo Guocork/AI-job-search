@@ -37,6 +37,7 @@
 <script setup>
 import { ref, onMounted, reactive } from 'vue';
 import { getMessage } from '@/api/methods'
+import { jobListApi } from '@/api/methods'
 
 const jobList = ref([
   {
@@ -50,7 +51,7 @@ const jobList = ref([
 const showTooltip = ref(false);
 
 const fetchJobList = () => {
-
+  jobListApi()
 };
 
 const tiaozhuan1=()=>{

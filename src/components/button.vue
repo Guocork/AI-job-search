@@ -7,13 +7,13 @@
         </el-button>
         <el-divider border-style="double" />
         <el-button link @click="TiaoZhuan2">
-        <el-icon :size="18"><User /></el-icon>
-        <span id="button1">模拟面试</span>
+        <el-icon :size="18"><Document /></el-icon>
+        <span id="button1">模拟笔试</span>
         </el-button>
         <el-divider border-style="double" />
         <el-button link @click="TiaoZhuan3">
-        <el-icon :size="18"><Document /></el-icon>
-        <span id="button1">模拟笔试</span>
+        <el-icon :size="18"><User /></el-icon>
+        <span id="button1">模拟面试</span>
         </el-button>
         <el-divider border-style="double" />
         <el-button link @click="OpenAlert">
@@ -46,11 +46,11 @@ const TiaoZhuan1=()=>{
   router.push('/youhua')
 }
 
-const TiaoZhuan2=()=>{
+const TiaoZhuan3=()=>{
   router.push('/mianshi')
 }
 
-const TiaoZhuan3=()=>{
+const TiaoZhuan2=()=>{
   router.push('/bishi')
 }
 

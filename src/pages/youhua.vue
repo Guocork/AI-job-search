@@ -31,7 +31,7 @@
     </el-col>
     <el-col :span="6">
       <div class="grid-content ep-bg-purple-light">
-        <el-button style="height: 45px;">优化简历</el-button>
+        <el-button @click="youhua" style="height: 45px;">优化简历</el-button>
       </div>
     </el-col>
   </el-row>
@@ -48,12 +48,22 @@
 
 <script setup>
 import { ref } from 'vue'
-import { ElMessage, ElMessageBox } from 'element-plus'
+import { ElMessage, ElMessageBox,ElLoading } from 'element-plus'
 import { UploadProps, UploadUserFile } from 'element-plus'
 
 const userReseme = ref('我是接口返回的简历')
 
 const value1 = ref('')
+
+const youhua=()=>{
+  const loading = ElLoading.service({
+        lock: true,
+        text: 'Loading',
+        background: 'rgba(0, 0, 0, 0.7)',
+    })
+    //网络请求
+    loading.close()
+}
 
 const options1 = [
   {

@@ -1,4 +1,4 @@
-//次文件夹用来封装网络请求方法
+//此文件夹用来封装网络请求方法
 import request from '@/utils/service';
 
 export function sendMessage(params) {
@@ -59,5 +59,14 @@ export function resumeHelper() {
         data: {
             "version": 1, "config": { "RESUME_FILE": { "use_cache": true }, "OUTPUT_STREAM": { "provider_id": "baichuan", "model_id": "Baichuan2-53B", "use_cache": true, "use_semantic_cache": false } }, "blocking": true, "inputs": [{ "Key": "Value" }]
         }
+    })
+}
+
+export function jobListApi(params) {
+    return request({
+        url: '/analyst/position/',
+        method: 'get',
+        mock: false,
+        data: params
     })
 }

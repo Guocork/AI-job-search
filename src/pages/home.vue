@@ -37,10 +37,23 @@
         </div>
       </el-col>
       <el-col :span="3" :offset="3">
-        <div class="grid-content ep-bg-purple">
+        <!-- <div class="grid-content ep-bg-purple">
           <span>显示工资  </span>
           <el-switch v-model="value5" size="large"/>
-        </div>
+        </div> -->
+        <div class="grid-content ep-bg-purple-light">
+        <el-upload v-model:file-list="fileList" class="upload-demo"
+          action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15" multiple :on-preview="handlePreview"
+          :on-remove="handleRemove" :before-remove="beforeRemove" :limit="1" :on-exceed="handleExceed"
+          :on-success="handlesuccess">
+          <el-button style="height: 45px;">上传简历</el-button>
+          <!-- <template #tip>
+            <div class="el-upload__tip">
+                文件大小不要超过500KB.
+            </div>
+          </template> -->
+        </el-upload>
+      </div>
       </el-col>
     </el-row>
     <jobCard />
