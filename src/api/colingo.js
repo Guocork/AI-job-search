@@ -7,7 +7,7 @@ export function sendMessage(params) {
         method: 'post',
         mock: false,
         data: {
-            "version": 1,
+            "version": 3,
             "config": {
                 "OUTPUT_STREAM": {
                     "provider_id": "openai",

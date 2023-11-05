@@ -44,7 +44,7 @@ const submit = () => {
     text: 'Loading',
     background: 'rgba(0, 0, 0, 0.7)',
   })
-  const text = `你现在是一名简历优化师，我现在要想面试的岗位是：${form.value.jobName}, 这是我的简历内容：\n${form.value.resume}。\n请你对我的这份简历优化一下并返回, 可以使用emoji表情丰富简历`;
+  const text = `你现在是一名简历优化师，我现在要想面试的岗位是：${form.value.jobName}, 这是我的简历内容：\n${form.value.resume}。\n请你对我的这份简历优化一下并返回, 可以帮我增添一些内容使我的简历更加丰富，丰富简历上的语言表达，提高我对目标岗位的求职成功率`;
   //网络请求
   sendMessage(text).then(
     res => {

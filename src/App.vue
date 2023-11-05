@@ -6,7 +6,7 @@
           <p @click="backHome" class="team_name">简优创意</p>
         </div>
         <div>
-          AI求职面试助手
+          AI求职一站式服务平台
         </div>
         <Button />
       </el-aside>
