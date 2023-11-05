@@ -4,8 +4,6 @@
         <el-step title="开始面试" />
         <el-step title="总结" />
     </el-steps>
-
-
     <el-row>
         <el-col :span="24">
             <el-card v-if="stepIndex === 0">
@@ -24,36 +22,45 @@
                 </el-form>
             </el-card>
             <el-card v-if="stepIndex === 1">
+                <el-form-item>
+                    <el-button type="primary" @click="stepIndex.value = 0">上一步</el-button>
+                    <el-button type="primary" @click="openConfirmBox()">提交</el-button>
+                </el-form-item>
                 <el-form label-width="auto" label-position="top">
                     <el-form-item v-for="(item, index) in questionList" :key="index" :label=item.question>
-                        <el-input v-model="item.myAnswer" size="large" :autosize="{ minRows: 5 }" />
-                    </el-form-item>
-                    <el-form-item>
-                        <el-button type="primary" @click="stepIndex.value = 0">上一步</el-button>
-                        <el-button type="primary" @click="beginInterviews()">开始面试</el-button>
-                        <el-button type="primary" @click="beginInterviews()">下一步</el-button>
+                        <el-input v-model="item.myAnswer" type="textarea" show-word-limit maxlength="350"
+                            :autosize="{ minRows: 5 }" />
                     </el-form-item>
                 </el-form>
+            </el-card>
+            <el-card v-if="stepIndex === 2">
+                <el-text class="mx-1">{{ summarize }}</el-text>
             </el-card>
         </el-col>
     </el-row>
 </template>
 
 <script setup>
-import { reactive, ref, h, watch } from 'vue';
+import { ref, } from 'vue';
 import { ElMessageBox, ElLoading } from 'element-plus'
 import { sendMessage } from '@/api/colingo'
 
 const form = ref({});
 const stepIndex = ref(0);
 const questionList = ref([]);
+const summarize = ref('');
 
 const beginInterviews = () => {
-    stepIndex.value = 1;
-    questions.value = [];
+    const loading = ElLoading.service({
+        lock: true,
+        text: '加载面试题中，请稍等......',
+        background: 'rgba(0, 0, 0, 0.7)',
+    })
     const text = `你现在是一位面试官，我正在面试的岗位名称：${form.value.jobName}, 我的简历：\n${form.value.resume}, 请你提供10道题来判断我是否能够胜任这个岗位，其中7到题为岗位技术题，3道题为人际关系题`
     sendMessage(text).then(
         res => {
+            stepIndex.value = 1;
+            questionList.value = [];
             const text = res.run.results[0][0].value.content;
             const regex = /(^\d+\.\s)(.*)/gm;
             const matchArray = Array.from(text.matchAll(regex));
@@ -64,110 +71,36 @@ const beginInterviews = () => {
                     question: item
                 })
             })
-        }
-    )
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// 自我介绍
-const input1 = ref('')
-
-// 剩余时间
-const restTime = ref(Date.now() + 1000 * 60 * 60 * 7)
-
-// 问题
-const question = ref('欢迎参加面试')
-
-// 显示时间
-const showTime = ref(false)
-
-const userAnswer = ref('')
-
-const mianshi1 = () => {
-    const prompt1 = '现在你是面试官，我在面试vue程序员的岗位，请出一道面试题。'
-    const loading = ElLoading.service({
-        lock: true,
-        text: 'Loading',
-        background: 'rgba(0, 0, 0, 0.7)',
-    })
-    //网络请求
-    sendMessage(prompt1).then(
-        res => {
-            question.value = res.run.results[0][0].value.content
-        }
-    )
-    watch(
-        () => question.value,
-        () => {
-            showTime.value = true
             loading.close();
         }
     )
-    // childComp.value.play();
 }
 
-const formRef = ref()
-
-const message = ref('')
-
-const numberValidateForm = reactive({
-    age: '',
-})
-
-const submitForm = () => {
-    const prompt2 = '现在你是面试官，这里有一道面试题目以及我的回答，请你根据我的回答进行分析与评价，并且给出你的建议。\n' + question.value + userAnswer.value
-    //loading
-    const loading = ElLoading.service({
-        lock: true,
-        text: 'Loading',
-        background: 'rgba(0, 0, 0, 0.7)',
-    })
-    //接口拿数据
-    sendMessage(prompt2).then(
-        res => {
-            message.value = res.run.results[0][0].value.content
+const openConfirmBox = () => {
+    ElMessageBox.confirm(
+        '您确认要提交面试问卷吗?',
+        {
+            confirmButtonText: '确认',
+            cancelButtonText: '取消'
         }
     )
-    watch(
-        () => message.value,
-        () => {
-            ElMessageBox({
-                title: '面试评价',
-                message: h('div', [
-                    h('span', null, message.value),
-                ]),
-                confirmButtonText: '确定',
+        .then(() => {
+            const loading = ElLoading.service({
+                lock: true,
+                text: '正在努力分析回答内容和岗位的匹配度，请稍等......',
+                background: 'rgba(0, 0, 0, 0.7)',
             })
-            //loading结束
-            loading.close();
-        }
-    )
+            const text = `你现在是一位面试官，我正在面试的岗位名称：${form.value.jobName}, 这是我的简历：\n${form.value.resume}\n,这里有一个json对象：${JSON.stringify(questionList.value)}。\n其中question为问题，myAnswer为我的回答，请你根据这些问题以及我对于的回答来分析我是否能够胜任这个岗位，如果不能胜任，请用委婉的话来说一下为什么你认为我不能胜任这个岗位以及需要提升的地方`
+            sendMessage(text).then(
+                res => {
+                    stepIndex.value = 2;
+                    console.log(res);
+                    summarize.value = res.run.results[0][0].value.content;
+                    loading.close();
+                }
+            )
+        })
 }
-
-const resetForm = (formEl) => {
-    if (!formEl) return
-    formEl.resetFields()
-}
-
-
 </script>
 
 <style scoped>
