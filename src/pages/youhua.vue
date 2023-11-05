@@ -18,13 +18,13 @@
       </el-card>
     </el-col>
     <el-col :span="12">
-      <el-card class="box-card2" title="优化后简历">
+      <el-card class="box-card2" title="优化后简历" style="text-align: left;white-space: pre-wrap;">
         <template #header>
           <div class="card-header">
             <span>优化后简历</span>
           </div>
         </template>
-        <el-text style="white-space: pre-wrap;text-align: left;" class="mx-1">{{ resume }}</el-text>
+        <el-text class="mx-1">{{ resume }}</el-text>
       </el-card>
     </el-col>
   </el-row>
