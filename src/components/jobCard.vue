@@ -1,60 +1,40 @@
 <template>
-  <div class="job-list">
-    <!-- <div v-for="(job, index) in jobList" :key="index" 
-         class="job-item" 
-         @mouseenter="showTooltip = true"
-         @mouseleave="showTooltip = false" 
-         @click="navigateToJobPage(job.url)">
-
-      <div class="job-title">🚀{{ job.title }}</div>
-      <div class="job-description">👨‍🎓{{ job.description }}</div>
-      <div class="job-location">🏢{{ job.location }}</div>
-
-      <transition name="fade">
-        <div v-if="showTooltip" class="tooltip">点击查看详情</div>
-      </transition>
-    </div> -->
-    <el-card v-for="(job, index) in jobList" :key="index" class="box-card" 
-         @mouseenter="showTooltip = true"
-         @mouseleave="showTooltip = false" >
-      <template #header>
-        <div class="card-header">
-          <span>{{job.corporation }}</span>
-          <el-button class="button" @click="tiaozhuan1" text>点击投递</el-button>
-        </div>
-      </template>
-      <div class="text item">🚀  {{ job.title }}</div>
-      <div class="text item">👨‍🎓 {{ job.description }}</div>
-      <div class="text item">📍  {{ job.location }}</div>
-      <div class="text item">🏢 {{ job.education }}</div>
-    </el-card>
-    <!-- <transition name="fade">
-        <div v-if="showTooltip" class="tooltip">ggggggg</div>
-      </transition> -->
-  </div>
+  <el-row :gutter="24">
+    <el-col :span="8" v-for="(item, index) in jobList" :key="item.id" class="box-card">
+      <el-card shadow="always">
+        <template #header>
+          <div class="card-header">
+            <span>{{ item.companyName }}</span>
+            <el-button @click="tiaozhaun1(item.jobUrl)" text>点击投递</el-button>
+          </div>
+        </template>
+        <el-descriptions column="1">
+          <el-descriptions-item label="🚀">{{ item.jobTitle }}</el-descriptions-item>
+          <el-descriptions-item label="👨‍🎓">{{ item.jobDescription }}</el-descriptions-item>
+          <el-descriptions-item label="📍">{{ item.jobLocation }}</el-descriptions-item>
+          <el-descriptions-item label="🏢">{{ item.jobRequirements }}</el-descriptions-item>
+          <el-descriptions-item label="🎯">{{ item.companyDescription }}</el-descriptions-item>
+        </el-descriptions>
+      </el-card>
+    </el-col>
+  </el-row>
 </template>
 
 <script setup>
-import { ref, onMounted, reactive } from 'vue';
-import { getMessage } from '@/api/methods'
+import { ref, onMounted, reactive,defineProps } from 'vue';
+import { selectJobListApi } from '@/api/job'
 
-const jobList = ref([
-  {
-    corporation:'青岛国信发展（集团）有限责任公司',
-    title: '技术开发岗（计算机方向）',
-    description: '1.具有计算机视觉、人工智能、物联网、大数据等技术研究与应用经历，熟练运用编程者优先；2.具有科研项目申报与管理相关经历；3.学习能力、理解能力、适应能力强，作风踏实过硬。',
-    location: '青岛市、烟台市、浙江省台州市，随船期间于青岛、浙江、福建、广东、海南等地',
-    education:'硕士|计算机科学与技术、软件工程、计算机应用技术、人工智能等。'
-  }
-]);
+const jobList = ref([]);
 const showTooltip = ref(false);
 
 const fetchJobList = () => {
-
+  selectJobListApi(props.info).then(res => {
+    jobList.value = res.data;
+  })
 };
 
-const tiaozhuan1=()=>{
-  window.open('https://xiaoyuan.zhaopin.com/job/CC234215610J40508363307', '_blank');
+const tiaozhaun1=(jobUrl)=>{
+  window.open(jobUrl, '_blank');
 }
 
 onMounted(() => {
@@ -62,14 +42,20 @@ onMounted(() => {
   fetchJobList();
 });
 
+// const play1 = () => {
+//   console.log(props.info.value);
+//   selectJobListApi(props.info)
+// }
+
+const props = defineProps({
+  //子组件接收父组件传递过来的值
+  info: Object,
+})
 
 
-// const navigateToJobPage = (url) => {
-//   // 跳转到指定网页
-//   window.open('https://colingo.ai/', '_blank');
-// };
-
-
+defineExpose({
+  fetchJobList,
+});
 
 </script>
 
@@ -132,7 +118,7 @@ onMounted(() => {
 .fade-leave-to
 
 .fade-leave-active in <2.1.8 */
-  /* /* {
+/* /* {
   opacity: 0;
   transform: translateY(-10px);
 } */

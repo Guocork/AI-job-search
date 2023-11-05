@@ -1,86 +1,88 @@
 <template>
   <div>
     <el-row justify="center">
-      <el-col :span="23">
+      <el-col :span="18">
         <div class="grid-content ep-bg-purple-dark">
-          <el-input v-model="input1" placeholder="工作名/要求/位置/月薪" style="height: 45px;" clearable :prefix-icon="Search" />
+          <el-input v-model="params.jobTitle" placeholder="工作名/要求/位置/月薪" style="height: 45px;" clearable
+            :prefix-icon="Search" >
+            <template #append>
+              <el-button :icon="Search" @click="change"/>
+            </template>
+          </el-input>
         </div>
       </el-col>
     </el-row>
-    <el-row>
+    <el-row justify="center">
       <el-col :span="6">
         <div class="grid-content ep-bg-purple">
-          <el-select v-model="value1" class="m-2" placeholder="工作类型" size="large">
-            <el-option v-for="item in options1" :key="item.value" :label="item.label" :value="item.value" />
+          <el-select v-model="params.type" class="m-2" placeholder="工作类型" size="large" filterable clearable>
+            <el-option v-for="item in options1" :key="item.value1" :label="item.label" :value="item.value1" />
           </el-select>
         </div>
       </el-col>
       <el-col :span="2" :offset="0">
         <div class="grid-content ep-bg-purple">
-          <el-select v-model="value2" class="m-2" placeholder="工作地点" size="large">
-            <el-option v-for="item in options2" :key="item.value" :label="item.label" :value="item.value" />
+          <el-select v-model="params.jobLocation" class="m-2" placeholder="工作地点" size="large" filterable @change="change"
+            clearable>
+            <el-option v-for="item in options2" :key="item.value2" :label="item.label" :value="item.value2" />
           </el-select>
         </div>
       </el-col>
       <el-col :span="2" :offset="1">
         <div class="grid-content ep-bg-purple">
-          <el-select v-model="value3" class="m-2" placeholder="经验要求" size="large">
-            <el-option v-for="item in options3" :key="item.value" :label="item.label" :value="item.value" />
+          <el-select v-model="params.experence" class="m-2" placeholder="经验要求" size="large" filterable clearable>
+            <el-option v-for="item in options3" :key="item.value3" :label="item.label" :value="item.value3" />
           </el-select>
         </div>
       </el-col>
       <el-col :span="2" :offset="1">
         <div class="grid-content ep-bg-purple">
-          <el-select v-model="value4" class="m-2" placeholder="工作方向" size="large">
-            <el-option v-for="item in options4" :key="item.value" :label="item.label" :value="item.value" />
+          <el-select v-model="params.jobTitle" class="m-2" placeholder="工作方向" size="large" filterable @change="change"
+            clearable>
+            <el-option v-for="item in options4" :key="item.value4" :label="item.label" :value="item.value4" />
           </el-select>
         </div>
       </el-col>
       <el-col :span="3" :offset="3">
-        <div class="grid-content ep-bg-purple">
+        <!-- <div class="grid-content ep-bg-purple">
           <span>显示工资  </span>
           <el-switch v-model="value5" size="large"/>
+        </div> -->
+        <div class="grid-content ep-bg-purple-light">
+          <el-upload v-model:file-list="fileList" class="upload-demo"
+            action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15" multiple :on-preview="handlePreview"
+            :on-remove="handleRemove" :before-remove="beforeRemove" :limit="1" :on-exceed="handleExceed"
+            :on-success="handlesuccess">
+            <el-button style="height: 45px;">上传简历</el-button>
+            <!-- <template #tip>
+            <div class="el-upload__tip">
+                文件大小不要超过500KB.
+            </div>
+          </template> -->
+          </el-upload>
         </div>
       </el-col>
     </el-row>
-    <jobCard />
+    <jobCard :info="params" ref="childComp" />
   </div>
 </template>
 
 <script setup>
 import jobCard from '@/components/jobCard.vue'
 import { Search } from '@element-plus/icons-vue'
-import { reactive, ref } from 'vue';
+import { reactive, ref, watch } from 'vue';
 
-// const data=reactive({
-//     options1:[
-//         '全职',
-//         '兼职',
-//         '远程',
-//     ],
-//     options2:[
-//         '北京',
-//         '上海',
-//         '杭州',
-//         '深圳',
-//     ],options3:[
-//         '不限',
-//         '一年',
-//         '二年',
-//         '三年及以上',
-//     ],options4:[
-//         '程序员',
-//         '运营',
-//         '设计师',
-//         '产品经理',
-//     ]
-// })
+const childComp = ref(null);
 
-const value1 = ref('')
-const value2 = ref('')
-const value3 = ref('')
-const value4 = ref('')
-const value5 = ref(true)
+const params = ref({});
+
+// watch(
+//   () => value2.value,
+//   () => {
+//     console.log(value2.value);
+//     childComp.value.play1();
+//   }
+// )
 
 const options1 = [
   {
@@ -153,6 +155,10 @@ const options4 = [
     label: '产品经理',
   }
 ]
+
+const change = () => {
+  childComp.value.fetchJobList();
+}
 </script>
 
 <style scoped>

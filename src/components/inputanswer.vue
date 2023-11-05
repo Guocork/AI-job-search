@@ -25,7 +25,7 @@
 
 <script setup>
 import { reactive, ref, defineProps, toRefs, computed } from 'vue';
-import { sendMessage } from '@/api/methods'
+import { sendMessage } from '@/api/colingo'
 import { ElLoading } from 'element-plus'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex';
@@ -57,7 +57,8 @@ const next = () => {
     "现在有一道面试题，\n内容是：" + thisQuestion.question + "这是我的回答：" + thisQuestion.answer + "。\n请给我这道题的标准正确答案，并且分析我的答案。";
   sendMessage(message).then(
     res => {
-      questionsList.value[thisSelectedIndex].standardAnswer = res;
+      let text=res.run.results[0][0].value.content;
+      questionsList.value[thisSelectedIndex].standardAnswer = text;
     }
   )
   data.selectedIndex = data.selectedIndex + 1;
@@ -73,17 +74,18 @@ const play = () => {
     background: 'rgba(0, 0, 0, 0.7)',
   })
   sendMessage(props.info).then(res => {
+    let text=res.run.results[0][0].value.content;
     let startIndex = 0;
     for (let index = 1; index < 6; index++) {
-      let index = res.indexOf("：", startIndex);
-      startIndex = res.indexOf("题", index);
+      let index = text.indexOf("：", startIndex);
+      startIndex = text.indexOf("题", index);
       if (startIndex == -1) {
         questionsList.value.push({
-          question: res.substring(index + 1)
+          question: text.substring(index + 1)
         });
       } else {
         questionsList.value.push({
-          question: res.substring(index + 1, startIndex)
+          question: text.substring(index + 1, startIndex)
         });
       }
     }
@@ -104,7 +106,7 @@ const submitAnswers = () => {
     "现在有一道面试题，\n内容是：" + thisQuestion.question + "这是我的回答：" + thisQuestion.answer + "。\n请给我这道题的标准正确答案，并且分析我的答案。";
   sendMessage(message).then(
     res => {
-      questionsList.value[thisSelectedIndex].standardAnswer = res;
+      questionsList.value[thisSelectedIndex].standardAnswer = res.run.results[0][0].value.content;
       console.log(questionsList.value);
       store.commit('question/addData', questionsList.value);
       loading.close();

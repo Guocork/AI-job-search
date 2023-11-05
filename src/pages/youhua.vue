@@ -1,146 +1,56 @@
 <template>
-  <el-row :gutter="10" class="hezi1">
-    <el-col :span="6">
-      <div class="grid-content ep-bg-purple">
-        <el-select v-model="value1" class="m-2" placeholder="求职职位" size="large">
-          <el-option v-for="item in options1" :key="item.value" :label="item.label" :value="item.value" />
-        </el-select>
-      </div>
+  <el-row :gutter="20">
+    <el-col :span="12">
+      <el-card>
+        <el-form label-width="auto" :model="form">
+          <el-form-item label-position="right">
+            <el-form-item label="岗位名称">
+              <el-input v-model="form.jobName" size="large" placeholder="请输入岗位名称" />
+            </el-form-item>
+          </el-form-item>
+          <el-form-item label="简历内容">
+            <el-input v-model="form.resume" type="textarea" placeholder="请输入简历内容" :autosize="{ minRows: 8 }" autosize />
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="submit">优化简历</el-button>
+          </el-form-item>
+        </el-form>
+      </el-card>
     </el-col>
-    <el-col :span="6">
-      <div class="grid-content ep-bg-purple-light">
-        <el-select v-model="value2" class="m-2" placeholder="工作时长" size="large">
-          <el-option v-for="item in options2" :key="item.value" :label="item.label" :value="item.value" />
-        </el-select>
-      </div>
-    </el-col>
-    <el-col :span="6">
-      <div class="grid-content ep-bg-purple-light">
-        <el-upload v-model:file-list="fileList" class="upload-demo"
-          action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15" multiple :on-preview="handlePreview"
-          :on-remove="handleRemove" :before-remove="beforeRemove" :limit="1" :on-exceed="handleExceed"
-          :on-success="handlesuccess">
-          <el-button style="height: 45px;">上传简历</el-button>
-          <!-- <template #tip>
-            <div class="el-upload__tip">
-                文件大小不要超过500KB.
-            </div>
-          </template> -->
-        </el-upload>
-      </div>
-    </el-col>
-    <el-col :span="6">
-      <div class="grid-content ep-bg-purple-light">
-        <el-button style="height: 45px;">优化简历</el-button>
-      </div>
+    <el-col :span="12">
+      <el-card class="box-card2" title="优化后简历" style="text-align: left;white-space: pre-wrap;">
+        <template #header>
+          <div class="card-header">
+            <span>优化后简历</span>
+          </div>
+        </template>
+        <el-text class="mx-1">{{ resume }}</el-text>
+      </el-card>
     </el-col>
   </el-row>
-  <el-card class="box-card" style="width:480px;margin:auto;">
-    {{ userReseme }}
-  </el-card>
-  <!-- <div class="common-layout">
-    <el-container>
-      <el-aside width="200px" background="black">Aside</el-aside>
-      <el-main>Main</el-main>
-    </el-container>
-  </div> -->
 </template>
 
 <script setup>
 import { ref } from 'vue'
-import { ElMessage, ElMessageBox } from 'element-plus'
-import { UploadProps, UploadUserFile } from 'element-plus'
+import { ElLoading } from 'element-plus'
+import { sendMessage } from '@/api/colingo'
 
-const userReseme = ref('我是接口返回的简历')
+const form = ref({})
+const resume = ref()
 
-const value1 = ref('')
-
-const options1 = [
-  {
-    value: '程序员',
-    label: '程序员',
-  },
-  {
-    value: '产品经理',
-    label: '产品经理',
-  },
-  {
-    value: '运营',
-    label: '运营',
-  },
-  {
-    value: '市场',
-    label: '市场',
-  },
-  {
-    value: '销售',
-    label: '销售',
-  },
-]
-
-const value2 = ref('')
-
-const options2 = [
-  {
-    value: '无',
-    label: '无',
-  },
-  {
-    value: '一年',
-    label: '一年',
-  },
-  {
-    value: '两年',
-    label: '两年',
-  },
-  {
-    value: '三年',
-    label: '三年',
-  },
-  {
-    value: '三年以上',
-    label: '三年以上',
-  },
-]
-
-
-const fileList = ref([
-  // {
-  //   name: 'element-plus-logo.svg',
-  //   url: 'https://element-plus.org/images/element-plus-logo.svg',
-  // },
-  // {
-  //   name: 'element-plus-logo2.svg',
-  //   url: 'https://element-plus.org/images/element-plus-logo.svg',
-  // },
-])
-
-const handleRemove = (file, uploadFiles) => {
-  console.log(file, uploadFiles)
-}
-
-const handlePreview = (uploadFile) => {
-  console.log(uploadFile)
-}
-
-const handlesuccess = (files, uploadFiles) => {
-  ElMessage.success(
-    '上传成功'
-  )
-}
-
-const handleExceed = (files, uploadFiles) => {
-  ElMessage.warning(
-    '只能上传一份简历'
-  )
-}
-
-const beforeRemove = (uploadFile, uploadFiles) => {
-  return ElMessageBox.confirm(
-    `Cancel the transfer of ${uploadFile.name} ?`
-  ).then(
-    () => true,
-    () => false
+const submit = () => {
+  const loading = ElLoading.service({
+    lock: true,
+    text: 'Loading',
+    background: 'rgba(0, 0, 0, 0.7)',
+  })
+  const text = `你现在是一名简历优化师，我现在要想面试的岗位是：${form.value.jobName}, 这是我的简历内容：\n${form.value.resume}。\n请你对我的这份简历优化一下并返回, 可以帮我增添一些内容使我的简历更加丰富，丰富简历上的语言表达，提高我对目标岗位的求职成功率`;
+  //网络请求
+  sendMessage(text).then(
+    res => {
+      resume.value = res.run.results[0][0].value.content;
+      loading.close();
+    }
   )
 }
 </script>
@@ -161,5 +71,4 @@ const beforeRemove = (uploadFile, uploadFiles) => {
 .box-card {
   width: 480px;
 }
-
 </style>
